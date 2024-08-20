@@ -7,7 +7,17 @@ pipeline {
               sh 'mvn clean install'
             }
           } 
-          stage('Build docker image'){
+          stage('run dockerfile'){
              steps{
                 script{
-                     sh 'docker build -t venkat4444/ 
+                     sh 'docker build -t venkat4444/banking-project-1 .'
+                }
+             }
+         }
+           stage('login to docker hub and push the file'){
+             steps {
+                 withCredentials([string(credentialsId: 'dockerhubpassword', variable: 'dockerhubpass')]) {
+                     sh 'docker login -u venkat4444 -p ${dockerhubpass}'
+}
+           }
+
